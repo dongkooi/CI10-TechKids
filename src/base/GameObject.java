@@ -4,8 +4,38 @@ import base.renderer.Renderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class GameObject {
+    public static ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public static ArrayList<GameObject> newGameObjects = new ArrayList<>();
+
+    public static <E extends GameObject> E create(Class<E> childClass) {
+        try {
+            GameObject newGameObject = childClass.newInstance();
+            newGameObjects.add(newGameObject);
+            return (E) newGameObject;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static void runall() {
+        for (GameObject go : gameObjects) {
+            go.run();
+        }
+    }
+
+
+    public static void rendererAll(Graphics g) {
+        for (GameObject go : gameObjects) {
+            go.render(g);
+        }
+        gameObjects.addAll(newGameObjects);
+        newGameObjects.clear();
+    }
+
+
     Renderer renderer;
     public Vector2D position;
 

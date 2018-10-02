@@ -51,6 +51,12 @@ public class Vector2D {
         return this;
     }
 
+    public Vector2D set(float x, float y) {
+        this.x = x;
+        this.y = y;
+        return new Vector2D(x, y);
+    }
+
     public float length() {
         return (float) Math.sqrt(x * x + y * y);
     }

@@ -12,64 +12,22 @@ public class GameCanvas extends JPanel {
     Background background;
     Player player;
     Enemy enemy;
-    public static ArrayList<Enemy> enemies;
-    public static ArrayList<PlayerBullet> playerBullets;
-    boolean shootLock;
-    int count = 0;
+
 
     public GameCanvas() {
-        this.background = new Background();
-        this.player = new Player();
-        enemies = new ArrayList<>();
-        playerBullets = new ArrayList<>();
+        this.background = GameObject.create(Background.class);
+        this.player = GameObject.create(Player.class);
 
-        this.enemy = new Enemy(50, 100);
-        Enemy enemy1 = new Enemy(175, 100);
-        Enemy enemy2 = new Enemy(300, 100);
-        enemies.add(enemy);
-        enemies.add(enemy1);
-        enemies.add(enemy2);
-
+        Enemy enemy = GameObject.create(Enemy.class);
     }
 
 
     public void run() {
-        background.run();
-        player.run();
-        for (Enemy enemy : enemies) {
-            enemy.run();
-        }
-
-
-        if (KeyEventPress.isSpacePress && !shootLock) {
-            PlayerBullet playerBullet = new PlayerBullet(player.position.x,player.position.y);
-            playerBullets.add(playerBullet);
-            shootLock = true;
-        }
-
-        if (shootLock) {
-            count++;
-            if (count > 30) {
-                shootLock = false;
-                count = 0;
-            }
-        }
-
-
-        for (PlayerBullet playerBullet : playerBullets) {
-            playerBullet.run();
-        }
+        GameObject.runall();
     }
 
     public void render(Graphics g) {
-        background.render(g);
-        player.render(g);
-        for (Enemy enemy : enemies) {
-            enemy.render(g);
-        }
-        for (PlayerBullet playerBullet : playerBullets) {
-            playerBullet.render(g);
-        }
+       GameObject.rendererAll(g);
     }
 
     @Override

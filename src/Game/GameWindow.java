@@ -1,6 +1,7 @@
 package Game;
 
 import Game.GameCanvas;
+import base.GameObject;
 import base.KeyEventPress;
 import base.Settings;
 
