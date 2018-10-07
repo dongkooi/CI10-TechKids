@@ -9,10 +9,12 @@ import tklibs.SpriteUtils;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject {
+public class Player extends GameObject implements Physics {
     FrameCounter fireCounter;
+    BoxCollider collider;
 
     public Player() {
+        super();
         ArrayList<BufferedImage> images = SpriteUtils.loadImage(
                 "assets/images/players/straight/0.png",
                 "assets/images/players/straight/1.png",
@@ -52,16 +54,25 @@ public class Player extends GameObject {
     }
 
     public void fire() {
-        PlayerBullet playerBullet = GameObject.create(PlayerBullet.class);
-        PlayerBullet1 playerBullet1 = GameObject.create(PlayerBullet1.class);
-        PlayerBullet2 playerBullet2 = GameObject.create(PlayerBullet2.class);
+        PlayerBullet playerBullet = GameObject.recycle(PlayerBullet.class);
+        PlayerBullet playerBullet1 = GameObject.recycle(PlayerBullet.class);
+        PlayerBullet playerBullet2 = GameObject.recycle(PlayerBullet.class);
+
+        playerBullet.velocity.set(0, -1);
+        playerBullet1.velocity.set(1, -1);
+        playerBullet2.velocity.set(-1, -1);
         playerBullet.position.set(this.position.x, this.position.y);
-        playerBullet1.position.set(this.position.x - 5, this.position.y);
-        playerBullet2.position.set(this.position.x + 5, this.position.y);
+        playerBullet1.position.set(this.position.x, this.position.y);
+        playerBullet2.position.set(this.position.x, this.position.y);
         this.fireCounter.reset();
     }
 
     public void move(int translateX, int translateY) {
         this.position.add(translateX, translateY);
+    }
+
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.collider;
     }
 }
