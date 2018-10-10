@@ -1,12 +1,11 @@
 package Game;
 
 import base.*;
-import tklibs.SpriteUtils;
+import base.enemy.Enemy;
+import base.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class GameCanvas extends JPanel {
     Background background;

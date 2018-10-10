@@ -1,9 +1,11 @@
-package base;
+package base.player;
 
-import Game.GameCanvas;
+import base.*;
 import base.counter.FrameCounter;
+import base.event.KeyEventPress;
+import base.physics.BoxCollider;
+import base.physics.Physics;
 import base.renderer.AnimationRenderer;
-import base.renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 public class Player extends GameObject implements Physics {
     FrameCounter fireCounter;
     BoxCollider collider;
+    int hp;
 
     public Player() {
         super();
@@ -26,6 +29,8 @@ public class Player extends GameObject implements Physics {
         this.renderer = new AnimationRenderer(images);
         this.position = new Vector2D(Settings.START_PLAYER_POSITION_X, Settings.START_PLAYER_POSITION_Y);
         this.fireCounter = new FrameCounter(30);
+        this.collider = new BoxCollider(32, 48);
+        this.hp = 20;
     }
 
     @Override
@@ -65,6 +70,14 @@ public class Player extends GameObject implements Physics {
         playerBullet1.position.set(this.position.x, this.position.y);
         playerBullet2.position.set(this.position.x, this.position.y);
         this.fireCounter.reset();
+    }
+
+    public void takeDamage(int damage) {
+        this.hp -= damage;
+        if (this.hp <= 0) {
+            this.destroy();
+            hp = 0;
+        }
     }
 
     public void move(int translateX, int translateY) {

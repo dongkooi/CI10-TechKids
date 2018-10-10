@@ -1,5 +1,6 @@
 package base;
 
+import base.physics.Physics;
 import base.renderer.Renderer;
 
 import java.awt.*;
@@ -25,7 +26,10 @@ public class GameObject {
         //Khong co thi tao moi
         //co thi dung lai
         //2. Return gameObject
-        for (GameObject go : gameObjects) {
+//        for (GameObject go : gameObjects) {
+        for (int i = 0; i < gameObjects.size(); i++)
+        {
+            GameObject go = gameObjects.get(i);
             if (!go.isActive && go.getClass().isAssignableFrom(childclass)) {
                 go.isActive = true;
                 return (E) go;
@@ -35,7 +39,10 @@ public class GameObject {
     }
 
     public static <E extends GameObject> E intersect(Class<E> childclass, Physics physics) {
-        for (GameObject go : gameObjects) {
+//        for (GameObject go : gameObjects) {
+        for (int i = 0; i < gameObjects.size(); i++)
+        {
+            GameObject go = gameObjects.get(i);
             if (go.isActive && go.getClass().isAssignableFrom(childclass) && go instanceof Physics) {
                 Physics physicsGo = (Physics) go;
                 boolean intersected = physics.getBoxCollider().intersect(physicsGo, (GameObject) physics);
@@ -49,19 +56,20 @@ public class GameObject {
 
     public static void runall() {
         for (int i = 0; i < gameObjects.size(); i++)
-//        for (GameObject go : gameObjects)
         {
             GameObject go = gameObjects.get(i);
             if (go.isActive) {
                 go.run();
             }
         }
-        System.out.println(gameObjects.size());
     }
 
 
     public static void rendererAll(Graphics g) {
-        for (GameObject go : gameObjects) {
+        for (int i = 0; i < gameObjects.size(); i++)
+//        for (GameObject go : gameObjects)
+        {
+            GameObject go = gameObjects.get(i);
             if (go.isActive) {
                 go.render(g);
             }

@@ -1,6 +1,10 @@
-package base;
+package base.player;
 
-import Game.GameCanvas;
+import base.physics.BoxCollider;
+import base.GameObject;
+import base.physics.Physics;
+import base.Vector2D;
+import base.enemy.Enemy;
 import base.renderer.AnimationRenderer;
 import tklibs.SpriteUtils;
 
@@ -8,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class PlayerBullet extends GameObject implements Physics {
-    Vector2D velocity;
+    public Vector2D velocity;
     BoxCollider collider;
 
     public PlayerBullet() {
